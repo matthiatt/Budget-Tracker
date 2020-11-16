@@ -26,8 +26,8 @@ router.post("/apiroute/transaction", ({ body }, res) => {
     });
 });
 
-// Creating this ahead of time - Need to replace 'xx' with another term.
-router.post("/apiroute/transaction/xx", ({ body }, res) => {
+// Creating this ahead of time - Need to replace '?' with another term.
+router.post("/apiroute/transaction/?", ({ body }, res) => {
   Transaction.insertMany(body) // Calling 'body' from line 29.
     // Creating a body to post data too.
     // Finding the object within the model document.
