@@ -21,6 +21,6 @@ const newTransSchema = new Schema({
   },
 });
 
-let Transaction = mongoose.model("Transamount", newTransSchema);
+let Transaction = mongoose.model("Transaction", newTransSchema);
 
 module.exports = Transaction;
