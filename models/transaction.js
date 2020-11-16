@@ -21,6 +21,7 @@ const newTransSchema = new Schema({
   },
 });
 
+// this model document 'Transaction' being defined.
 let Transaction = mongoose.model("Transaction", newTransSchema);
 
 module.exports = Transaction;
