@@ -22,7 +22,7 @@ mongoose.connect("mongodb://localhost/budgetTracker", {
   useFindAndModify: false,
 });
 
-// Routes I am using here
+// The route I am requiring here.
 app.use(require("./routes/apiroute.js"));
 
 app.listen(PORT, () => {
