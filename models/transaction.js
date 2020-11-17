@@ -1,7 +1,7 @@
-// Required modules
+// Required modules.
 const mongoose = require("mongoose");
 
-let Schema = mongoose.Schema; //Schema constructor
+let Schema = mongoose.Schema; // Schema constructor.
 
 const newTransSchema = new Schema({
   // Displaying what I want my new constructor object to accomplish with other objects defining actions.
@@ -16,12 +16,12 @@ const newTransSchema = new Schema({
     required: "Please enter in desired amount of fiat here.",
   },
   date: {
-    type: Date, //enabling basic storage of time and date.
-    default: Date.now, //Today's date.
+    type: Date, // Enabling basic storage of time and date.
+    default: Date.now, // Today's date.
   },
 });
 
-// this model document 'Transaction' being defined.
+// This model document 'Transaction' being defined.
 let Transaction = mongoose.model("Transaction", newTransSchema);
 
 module.exports = Transaction;
