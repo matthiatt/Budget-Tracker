@@ -8,3 +8,17 @@ const FILES_TO_CACHE = [
   "icons/icon-192x192.png",
   "icons/icon-512x512.png",
 ];
+
+const cacheStatic = "staticCache";
+const cacheDataGiven = "cacheDataName";
+
+//Next I want to create/install my service worker here.
+self.addEventListener("install", (e) => {
+  // adding an event listener here within the function within the parameters.
+  e.waitUntil(
+    caches.open(cacheStatic).then((cache) => {
+      return cache.addAll(FILES_TO_CACHE);
+    })
+  );
+  self.skipWaiting();
+});
