@@ -59,7 +59,7 @@ self.addEventListener("fetch", (e) => {
   }
 
   // 'Get requests' for the data, which is coming from the /api routes.
-  if (e.req.url.includes("/api/icons")) {
+  if (e.req.url.includes("/public/")) {
     // Making it possible to make the user see the information that's been previously loaded if the internet stops working for any reason.
     e.respondWith(
       // Calling the variable again I declared on line 13.
