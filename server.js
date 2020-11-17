@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const compression = require("compression");
 const logger = require("morgan");
 
-const PORT = 3000; // Port number connected
+const PORT = process.env.PORT || 3000; // Port number connected
 
 const app = express(); //express being defined
 
