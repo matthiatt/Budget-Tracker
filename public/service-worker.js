@@ -22,3 +22,12 @@ self.addEventListener("install", (e) => {
   );
   self.skipWaiting();
 });
+
+// Next after I installed the service-worker, I now want to activate it so it can function correctly.
+self.addEventListener("active", (e) => {
+  e.waitUntil(
+    caches.keys().then((cachedItemList) => {
+      return cachedItemList.filter(cachedItemList);
+    })
+  );
+});
