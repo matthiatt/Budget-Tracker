@@ -1,27 +1,136 @@
-// Creating an array for later functionality to be implemented by 'transModel'
-let transModel = [];
+let transactions = [];
+let myChart;
 
-fetch("/apiroute/transaction")
-  .then((res) => {
-    // Promise to return the the data on response.
-    return res.json();
+fetch("/api/transaction")
+  .then((response) => {
+    return response.json();
   })
   .then((data) => {
-    // Creating a promise to take the database data on a global variable I called on line 1.
-    transModel = data;
+    transactions = data;
+
+    populateTotal();
+    populateTable();
+    populateChart();
   });
 
-function addTransactionAmounts() {
-  // Function purpose: to populate the area to see the transaction amounts being displayed.
-  // To add more, I want this function to have the ability to add fiat amounts when action is completed.
-  var totalAmount =
+function populateTotal() {
+  let total = transactions.reduce((total, t) => {
+    return total + parseInt(t.value);
+  }, 0);
+
+  let totalEl = document.querySelector("#total");
+  totalEl.textContent = total;
 }
 
+function populateTable() {
+  let tbody = document.querySelector("#tbody");
+  tbody.innerHTML = "";
 
+  transactions.forEach((transaction) => {
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${transaction.name}</td>
+      <td>${transaction.value}</td>
+    `;
 
-function subtractTransactionAmount(a, b) {
-    // Function purpose: to populate the area to see the transaction amounts being displayed, based on action user takes.
-    // To subtract fiat amounts when the action is completed from the user.
-  const result = a - b;
-  return result;
+    tbody.appendChild(tr);
+  });
 }
+
+function populateChart() {
+  let reversed = transactions.slice().reverse();
+  let sum = 0;
+
+  let labels = reversed.map((t) => {
+    let date = new Date(t.date);
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  });
+
+  let data = reversed.map((t) => {
+    sum += parseInt(t.value);
+    return sum;
+  });
+
+  if (myChart) {
+    myChart.destroy();
+  }
+
+  let ctx = document.getElementById("myChart").getContext("2d");
+
+  myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "Total Over Time",
+          fill: true,
+          backgroundColor: "#6666ff",
+          data,
+        },
+      ],
+    },
+  });
+}
+
+function sendTransaction(isAdding) {
+  let nameEl = document.querySelector("#t-name");
+  let amountEl = document.querySelector("#t-amount");
+  let errorEl = document.querySelector(".form .error");
+
+  if (nameEl.value === "" || amountEl.value === "") {
+    errorEl.textContent = "Missing Information";
+    return;
+  } else {
+    errorEl.textContent = "";
+  }
+
+  let transaction = {
+    name: nameEl.value,
+    value: amountEl.value,
+    date: new Date().toISOString(),
+  };
+
+  if (!isAdding) {
+    transaction.value *= -1;
+  }
+
+  transactions.unshift(transaction);
+
+  populateChart();
+  populateTable();
+  populateTotal();
+
+  fetch("/api/transaction", {
+    method: "POST",
+    body: JSON.stringify(transaction),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.errors) {
+        errorEl.textContent = "Missing Information";
+      } else {
+        nameEl.value = "";
+        amountEl.value = "";
+      }
+    })
+    .catch((err) => {
+      saveRecord(transaction);
+      nameEl.value = "";
+      amountEl.value = "";
+    });
+}
+
+document.querySelector("#add-btn").onclick = function () {
+  sendTransaction(true);
+};
+
+document.querySelector("#sub-btn").onclick = function () {
+  sendTransaction(false);
+};
