@@ -16,3 +16,12 @@ function addTransactionAmounts() {
   // To add more, I want this function to have the ability to add fiat amounts when action is completed.
   var totalAmount =
 }
+
+
+
+function subtractTransactionAmount(a, b) {
+    // Function purpose: to populate the area to see the transaction amounts being displayed, based on action user takes.
+    // To subtract fiat amounts when the action is completed from the user.
+  const result = a - b;
+  return result;
+}
