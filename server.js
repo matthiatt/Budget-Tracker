@@ -19,6 +19,8 @@ app.use(express.static("public")); // to the public folder.
 mongoose.connect("mongodb://localhost/budget", {
   // What I am calling my database.
   useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
   useFindAndModify: false,
 });
 
