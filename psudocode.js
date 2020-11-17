@@ -1,3 +1,6 @@
+// https://web.dev/add-manifest/
+// used this for the manifest.
+
 // Add in a way to create offline functionality cache to have a way to connect user changes once internet connection is established again.
 // This should work when a user withdrawls funds and/or deposits funds into thier account.
 // The changes should be displayed so the user knows that the task has been completed successfully.
