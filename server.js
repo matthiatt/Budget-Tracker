@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.use(express.static("public")); // to the public folder.
 
-mongoose.connect("mongodb://localhost/budget", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budget", {
   // What I am calling my database.
   useNewUrlParser: true,
   useUnifiedTopology: true,
