@@ -31,3 +31,6 @@ self.addEventListener("active", (e) => {
     })
   );
 });
+
+// After activing the service-worker, I then need to create a 'fetch'.
+self.addEventListener("fetch", (e) => {});
