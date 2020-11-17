@@ -2,7 +2,7 @@
 const router = require("express").Router();
 const Transaction = require("../models/transaction.js");
 
-router.get("/apiroute/transaction", (req, res) => {
+router.get("/api/transaction", (req, res) => {
   // Needed to look at the homework file for the sort date.
   Transaction.find({})
     .sort({ date: -1 })
@@ -14,7 +14,7 @@ router.get("/apiroute/transaction", (req, res) => {
     });
 });
 
-router.post("/apiroute/transaction", ({ body }, res) => {
+router.post("/api/transaction", ({ body }, res) => {
   Transaction.create(body) // Calling 'body' from line 16
     // Creating a body to post data too.
     // Finding the object within the model document.
@@ -28,7 +28,7 @@ router.post("/apiroute/transaction", ({ body }, res) => {
 });
 
 // Creating this ahead of time - Need to replace '?' with another term.
-router.post("/apiroute/transaction/bulk", ({ body }, res) => {
+router.post("/api/transaction/bulk", ({ body }, res) => {
   Transaction.insertMany(body) // Calling 'body' from line 29.
     // Creating a body to post data too.
     // Finding the object within the model document.
